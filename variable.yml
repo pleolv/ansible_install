@@ -1,0 +1,31 @@
+---
+- hosts: local
+  vars: 
+    - name: "John"
+  tasks:
+    - name: Print message
+      debug: msg="Hello to {{name}}, from Ansible!!"
+    #- name: startowanie bazy
+    #  shell: systemctl start mariadb
+    #- name: dodanie do autostartu
+    #  lineinfile:
+    #    dest: /etc/zabbix/zabbix_agent.conf
+    #    regexp: '# DBHost=localhost'
+    #    line: 'DBHost=localhost'
+    #- name: uncomment
+    #  replace:
+    #    dest: /etc/httpd/conf.d/zabbix.conf
+    #    regexp: '# php_value'
+    #    replace: 'php_value'
+    #- name: Set httpd_can_connect_zabbix flag on and keep it persistent across reboots
+    #  seboolean:
+    #    name: httpd_can_connect_zabbix
+    #    state: yes
+    #    persistent: yes
+    #- name: off selinux
+    #  shell: setenforce 0
+    #- name: seline modify enforcing
+    #  lineinfile:
+    #    dest: /etc/selinux/config
+    #    regexp: '^SELINUX='
+    #    line: 'SELINUX=disabled'
