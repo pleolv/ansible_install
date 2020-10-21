@@ -13,6 +13,11 @@
         - { regexp: '# Server=', line: 'Server=127.0.0.1' }
         - { regexp: '# ServerActive=', line: 'ServerActive=127.0.0.1' }
         - { regexp: '# Hostname=', line: 'Hostname=zabbix' }
+    - name: start procesu
+      systemd:
+        state: started
+        name: zabbix-agent
+      
     #- name: uncomment
     #  replace:
     #    dest: /etc/httpd/conf.d/zabbix.conf
