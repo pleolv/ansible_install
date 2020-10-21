@@ -4,13 +4,15 @@
       yum: 
         name: zabbix-agent
         state: installed
-    #- name: startowanie bazy
-    #  shell: systemctl start mariadb
-    #- name: dodanie do autostartu
-    #  lineinfile:
-    #    dest: /etc/zabbix/zabbix_agent.conf
-    #    regexp: '# DBHost=localhost'
-    #    line: 'DBHost=localhost'
+    - name: dodanie agenta
+      lineinfile:
+        dest: /etc/zabbix/zabbix_agentd.conf
+        regexp: "{{ item.regexp }}"
+        line: '{{ item.line}}'
+      with_items:
+        - { regexp: '# Server=', line: 'Server=127.0.0.1' }
+        - { regexp: '# ServerActive=', line: 'ServerActive=127.0.0.1' }
+        - { regexp: '# Hostname=', line: 'Hostname=zabbix' }
     #- name: uncomment
     #  replace:
     #    dest: /etc/httpd/conf.d/zabbix.conf
