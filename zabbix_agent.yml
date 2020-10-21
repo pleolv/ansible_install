@@ -1,18 +1,27 @@
 - hosts: local
+  become: yes
+  vars:
+    file_dest: "/etc/zabbix/zabbix_agentd.conf"
   tasks:
     - name: dodanie agenta do zabbixa
       yum: 
         name: zabbix-agent
         state: installed
-    - name: dodanie agenta
+    - name: dodanie serwera do konfiga
       lineinfile:
-        dest: /etc/zabbix/zabbix_agentd.conf
-        regexp: "{{ item.regexp }}"
-        line: '{{ item.line}}'
-      with_items:
-        - { regexp: '# Server=', line: 'Server=127.0.0.1' }
-        - { regexp: '# ServerActive=', line: 'ServerActive=127.0.0.1' }
-        - { regexp: '# Hostname=', line: 'Hostname=zabbix' }
+        dest: "{{ file_dest }}"
+        regexp: '# Server='
+        line: 'Server=127.0.0.1'
+    - name: dodanie aktywnego serwera
+      lineinfile:
+        dest: "{{ file_dest }}"
+        regexp: '# ServerActive='
+        line: 'ServerActive=127.0.0.1'
+    - name: zmieniamy hosta
+      lineinfile:
+        dest: "{{ file_dest }}"
+        regexp: '# Hostname='
+        line: 'Hostname=127.0.0.1'
     - name: start procesu
       systemd:
         state: started
